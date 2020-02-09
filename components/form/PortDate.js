@@ -9,13 +9,10 @@ export default class PortDate extends React.Component {
 
   constructor(props) {
     super(props);
-
-    const dateValue = props.initialDate ? moment(props.initialDate) : moment();
-    const isHidden = props.initialDate ? false : true;
-
+    
     this.state = {
-      dateValue,
-      isHidden
+      dateValue: new Date(),
+      isHidden : false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,6 +27,7 @@ export default class PortDate extends React.Component {
   }
 
   handleChange(date) {
+
     this.setState({
       dateValue: date
     });
@@ -38,44 +36,43 @@ export default class PortDate extends React.Component {
   }
 
   toggleDate(date) {
-
+ 
     this.setState({
       isHidden: !this.state.isHidden
     });
 
-    this.setFieldValueAndTouched(date, true);
+    this.setFieldValueAndTouched(date, true); 
   }
 
   render() {
-    const { canBeDisabled, label, field, form: { touched, errors} } = this.props;
-    const { isHidden, dateValue } = this.state;
+    const { canBeDisabled, label, field, form: { touched, errors } } =this.props;
+    const { isHidden, dateValue } = this.state
+    //const { touched, errors } = this.props.form;
 
-    return (
+    return(
       <FormGroup>
       <Label>{label}</Label>
         <div className="input-group">
           { !isHidden &&
-            <DatePicker
+            <DatePicker           
               selected={dateValue}
               onChange={this.handleChange}
               peekNextMonth
               showMonthDropdown
               showYearDropdown
               maxDate={moment()}
-              dropdownMode="select"
+              dropdownMode="select"            
             />
           }
         </div>
-        { canBeDisabled && !isHidden && <Button onClick={() => this.toggleDate(null)}>Still Working Here...</Button>}
+        { canBeDisabled && !isHidden && <Button onClick={() => this.toggleDate()}> Still Working Here...</Button> }
 
-        { canBeDisabled && isHidden &&
+        { canBeDisabled && isHidden && 
           <React.Fragment>
             <span> Still Working Here </span>
             <Button onClick={() => this.toggleDate(dateValue)}> Set End Date </Button>
           </React.Fragment>
         }
-
-
 
         { touched[field.name] &&
           errors[field.name] && <div className="error">{errors[field.name]}</div>}
@@ -83,16 +80,3 @@ export default class PortDate extends React.Component {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

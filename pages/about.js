@@ -1,15 +1,18 @@
 import React from 'react';
-import Header from '../components/shared/Header';
 import BaseLayout from '../components/layouts/BaseLayout';
+import BasePage from '../components/BasePage';
+
+import withAuth from '../components/hoc/withAuth';
 
 class About extends React.Component {
 
   render() {
     return(
-      <div>
-        <h1> I am About Page </h1>
-        <Header />
-      </div>
+      <BaseLayout {...this.props.auth}>
+        <BasePage className="about-page" title="I am About Page">
+          
+        </BasePage>
+      </BaseLayout>      
     )
   }
 }
